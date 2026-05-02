@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dad Joke Goblin</title>
+
+  <style>
+    :root {
+      --pink: #ff4fd8;
+      --yellow: #fff04a;
+      --green: #39ff88;
+      --blue: #42d9ff;
+      --orange: #ff8a00;
+      --black: #060608;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Comic Sans MS", "Comic Sans", Arial, sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 79, 216, 0.45), transparent 25%),
+        radial-gradient(circle at 80% 10%, rgba(57, 255, 136, 0.35), transparent 25%),
+        radial-gradient(circle at 50% 100%, rgba(66, 217, 255, 0.35), transparent 35%),
+        linear-gradient(135deg, #08080c, #1b1029, #09090f);
+      overflow-x: hidden;
+      padding: 16px;
+    }
+
+    .chaos-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .floater {
+      position: absolute;
+      font-size: clamp(1.6rem, 4vw, 4rem);
+      opacity: 0.16;
+      animation: floaty 9s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes floaty {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      50% { transform: translateY(-30px) rotate(18deg) scale(1.2); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); }
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04));
+      border: 5px solid var(--yellow);
+      border-radius: 36px;
+      padding: clamp(22px, 5vw, 46px);
+      text-align: center;
+      box-shadow:
+        0 0 0 8px rgba(255, 79, 216, 0.25),
+        0 35px 100px rgba(0, 0, 0, 0.62);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "ROTATING JOKE CANNON";
+      position: absolute;
+      top: 18px;
+      left: -72px;
+      transform: rotate(-35deg);
+      background: var(--green);
+      color: #08110b;
+      font-weight: 1000;
+      padding: 10px 82px;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+    }
+
+    .card::after {
+      content: "GROAN CERTIFIED";
+      position: absolute;
+      bottom: 22px;
+      right: -55px;
+      transform: rotate(-25deg);
+      background: var(--pink);
+      color: white;
+      font-weight: 1000;
+      padding: 10px 65px;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 12vw, 8rem);
+      line-height: 0.86;
+      letter-spacing: -4px;
+      text-shadow:
+        5px 5px 0 #ff4fd8,
+        10px 10px 0 #42d9ff,
+        15px 15px 0 rgba(0,0,0,0.45);
+      transform: rotate(-2deg);
+    }
+
+    .subtitle {
+      margin: 24px auto 0;
+      max-width: 760px;
+      color: #f7f7f7;
+      font-size: clamp(1rem, 3vw, 1.35rem);
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .joke-box {
+      position: relative;
+      margin: 34px auto;
+      min-height: 260px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          rgba(255, 240, 74, 0.13),
+          rgba(255, 240, 74, 0.13) 12px,
+          rgba(255, 79, 216, 0.13) 12px,
+          rgba(255, 79, 216, 0.13) 24px
+        ),
+        rgba(0,0,0,0.48);
+      border: 4px dashed var(--green);
+      border-radius: 30px;
+      padding: clamp(22px, 5vw, 40px);
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.45);
+    }
+
+    .joke-box::before {
+      content: "🚨 CRINGE ROTATION ACTIVE 🚨";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%) rotate(1deg);
+      background: var(--yellow);
+      color: #111;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 1000;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      border: 3px solid black;
+    }
+
+    #joke {
+      margin: 0;
+      font-size: clamp(1.45rem, 5vw, 3.15rem);
+      line-height: 1.18;
+      font-weight: 1000;
+      color: white;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.65);
+    }
+
+    .button-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    #bigButton {
+      position: relative;
+      width: min(100%, 650px);
+      min-height: 120px;
+      border: 6px solid black;
+      border-radius: 999px;
+      cursor: pointer;
+      background:
+        radial-gradient(circle at 30% 20%, #fff, transparent 14%),
+        linear-gradient(135deg, var(--yellow), var(--orange), var(--pink));
+      color: #101010;
+      font-size: clamp(1.35rem, 6vw, 3.2rem);
+      font-weight: 1000;
+      font-family: inherit;
+      box-shadow:
+        0 16px 0 #6d2400,
+        0 30px 60px rgba(0,0,0,0.55);
+      transform: rotate(1deg);
+      transition: 0.12s ease;
+      text-transform: uppercase;
+    }
+
+    #bigButton:hover {
+      transform: rotate(-1deg) scale(1.025);
+      filter: saturate(1.3);
+    }
+
+    #bigButton:active {
+      transform: translateY(12px) scale(0.98);
+      box-shadow:
+        0 4px 0 #6d2400,
+        0 16px 38px rgba(0,0,0,0.45);
+    }
+
+    #bigButton:disabled {
+      opacity: 0.82;
+      cursor: wait;
+    }
+
+    .stats {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      background: rgba(0,0,0,0.42);
+      border: 3px solid rgba(255,255,255,0.22);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+      color: white;
+      font-size: 0.92rem;
+    }
+
+    .mini-panel {
+      background: rgba(0,0,0,0.36);
+      border: 3px solid rgba(255,255,255,0.16);
+      border-radius: 26px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 20px 55px rgba(0,0,0,0.35);
+    }
+
+    .mini-panel h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .source-line {
+      color: #f4f4f5;
+      font-weight: 800;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    #history {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #history li {
+      background: rgba(255,255,255,0.09);
+      border: 2px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 12px;
+      font-size: 0.95rem;
+      line-height: 1.35;
+      color: #f4f4f5;
+    }
+
+    .history-source {
+      display: block;
+      color: var(--yellow);
+      font-size: 0.8rem;
+      font-weight: 1000;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .shake {
+      animation: shake 0.35s linear;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(-8px, 4px) rotate(-1deg); }
+      40% { transform: translate(8px, -4px) rotate(1deg); }
+      60% { transform: translate(-6px, 3px) rotate(-1deg); }
+      80% { transform: translate(6px, -3px) rotate(1deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    .pop {
+      position: fixed;
+      z-index: 50;
+      font-size: 2.5rem;
+      pointer-events: none;
+      animation: pop 1s ease forwards;
+    }
+
+    @keyframes pop {
+      0% {
+        opacity: 0;
+        transform: scale(0.4) rotate(0deg);
+      }
+      25% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-120px) scale(1.8) rotate(25deg);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        border-radius: 26px;
+        border-width: 4px;
+      }
+
+      .card::before,
+      .card::after {
+        display: none;
+      }
+
+      #bigButton {
+        min-height: 105px;
+      }
+
+      .joke-box {
+        min-height: 230px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="chaos-bg" id="chaosBg"></div>
+
+  <main class="page" id="page">
+    <section class="card">
+      <h1>Dad Joke<br>Goblin</h1>
+
+      <p class="subtitle">
+        One button. Multiple joke sources. Maximum cringe. The website rotates APIs automatically so the goblin does not run out of cheese.
+      </p>
+
+      <section class="joke-box">
+        <p id="joke">
+          Press the big silly button and prepare to groan.
+        </p>
+      </section>
+
+      <div class="button-wrap">
+        <button id="bigButton">SUMMON A DAD JOKE</button>
+      </div>
+
+      <div class="stats">
+        <div class="pill">Jokes fired: <span id="count">0</span></div>
+        <div class="pill">Source: <span id="source">Goblin idle</span></div>
+        <div class="pill">Cringe level: <span id="cringe">0%</span></div>
+      </div>
+    </section>
+
+    <section class="mini-panel">
+      <h2>Rotation Order</h2>
+      <div class="source-line" id="rotationLine">
+        Loading sources...
+      </div>
+    </section>
+
+    <section class="mini-panel">
+      <h2>Recent Groan Crimes</h2>
+      <ul id="history"></ul>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const jokeEl = document.getElementById("joke");
+    const countEl = document.getElementById("count");
+    const sourceEl = document.getElementById("source");
+    const cringeEl = document.getElementById("cringe");
+    const historyEl = document.getElementById("history");
+    const bigButton = document.getElementById("bigButton");
+    const page = document.getElementById("page");
+    const chaosBg = document.getElementById("chaosBg");
+    const rotationLine = document.getElementById("rotationLine");
+
+    let count = Number(localStorage.getItem("goblin_joke_count")) || 0;
+    let history = safeJsonParse(localStorage.getItem("goblin_joke_history"), []);
+    let sourceIndex = Number(localStorage.getItem("goblin_source_index")) || 0;
+
+    const chaosEmojis = [
+      "🤡", "🧀", "🧦", "🦆", "🔥", "🥴", "👹", "🍕", "🪠",
+      "🧃", "🦷", "🐸", "🥔", "🦀", "🧅", "🎺", "🫠", "👞", "🥸", "🪩"
+    ];
+
+    const groanCategories = [
+      "puns",
+      "animals",
+      "food",
+      "science",
+      "technology",
+      "coffee",
+      "cars",
+      "space",
+      "school",
+      "music",
+      "ocean",
+      "classic"
+    ];
+
+    const cringeClosers = [
+      " Magnificent. Terrible. Exactly as nature intended.",
+      " That one arrived wearing socks with sandals.",
+      " Painful. Cheesy. Legally a dad joke.",
+      " Somewhere, a barbecue just gained sentience.",
+      " That pun should come with a warning label.",
+      " Absolutely dreadful. Perfect.",
+      " The room has now lost respect for us both.",
+      " That joke has cholesterol.",
+      " A medically significant groan has occurred.",
+      " That was not comedy. That was a cheese incident.",
+      " Put that one straight into the dad archive.",
+      " This joke has been reported to the Pun Council."
+    ];
+
+    const localCringeJokes = [
+      "I bought a belt made of watches. Complete waist of time.",
+      "I tried to organise a hide and seek tournament, but good players are hard to find.",
+      "My fridge said I should chill. Honestly, that was cold.",
+      "I asked my calendar why it looked nervous. It said its days were numbered.",
+      "I started a band called 999 Megabytes. We still haven’t got a gig.",
+      "I told my printer it was useless. Now it’s refusing to work out of spite.",
+      "I bought a book about glue. I couldn’t put it down.",
+      "I asked the cemetery if it had Wi-Fi. They said the connection was dead.",
+      "My vacuum cleaner quit. It said I was just pushing it around.",
+      "I made a pencil with two erasers. It was pointless.",
+      "I used to hate facial hair, but then it grew on me.",
+      "I tried to make a joke about paper. It was tearable.",
+      "I opened a bakery for pessimists. Business is crumbling.",
+      "I asked my mirror for a compliment. It said, “Reflect on that.”",
+      "I tried to catch fog yesterday. I mist.",
+      "I don’t trust stairs. They’re always up to something.",
+      "I asked my shoes if they were tired. They said they were sole-destroyed.",
+      "My coffee told me a joke. It was brew-tal.",
+      "I bought a boat because it was on sail.",
+      "The scarecrow won an award because he was outstanding in his field.",
+      "I told a joke about construction. I’m still working on it.",
+      "I asked my phone if it was hungry. It said it had too many cookies.",
+      "I went to buy camouflage trousers, but I couldn’t find any.",
+      "I asked the clock for advice. It said, “Give it time.”",
+      "I told my sofa a joke. It said it needed a moment to cushion the blow.",
+      "I made a joke about elevators. It works on many levels.",
+      "I asked my keyboard for help. It said I wasn’t its type.",
+      "I told my towel a secret. It said it would absorb the information.",
+      "I bought a ladder to improve myself. It was a step up.",
+      "I asked my bicycle why it was tired. It said it was two-tyred.",
+      "I tried to make a joke about sodium. Na.",
+      "I asked my cheese if it wanted to go out. It said, “Only if it’s mature.”",
+      "I tried to write a joke about pizza. It was too cheesy.",
+      "I asked my curtains if they were okay. They told me to pull myself together.",
+      "I bought a thesaurus, but when I opened it all the pages were blank. I have no words.",
+      "I asked my plant if it was lonely. It said it was rooting for me.",
+      "I told my headphones a joke. They said it sounded good.",
+      "I started a restaurant for chickens. It was an egg-cellent idea.",
+      "I asked the ocean for a joke. It waved.",
+      "I told my washing machine a secret. It put a spin on it.",
+      "I tried to make a skeleton laugh, but he didn’t have the guts.",
+      "I asked my lightbulb for advice. It said I needed a bright idea.",
+      "I told my chair it was supportive. It said, “I’ve got your back.”",
+      "I asked the banana why it was sad. It said life was peeling apart.",
+      "I tried to make a joke about butter, but it spread too far."
+    ];
+
+    const localTemplates = [
+      () => "I asked my " + pick([
+        "fridge", "printer", "calendar", "mirror", "sofa", "keyboard", "alarm clock", "microwave"
+      ]) + " for advice. It said, “" + pick([
+        "Give it time.",
+        "Chill out.",
+        "You are not my type.",
+        "Reflect on your choices.",
+        "I support you, but please sit down.",
+        "This is a heated situation.",
+        "Your days are numbered.",
+        "Let’s not print more problems."
+      ]) + "”",
+
+      () => "My " + pick([
+        "coffee", "cheese", "keyboard", "plant", "suitcase", "phone", "washing machine", "shoes"
+      ]) + " told me a joke. It was " + pick([
+        "brew-tal.",
+        "grate.",
+        "not my type.",
+        "rooted in truth.",
+        "packed with emotion.",
+        "app-solutely awful.",
+        "a spin-off.",
+        "sole-destroying."
+      ]),
+
+      () => "I tried to make a joke about " + pick([
+        "paper", "construction", "elevators", "pizza", "sodium", "butter", "fog", "stairs"
+      ]) + ", but " + pick([
+        "it was tearable.",
+        "I’m still working on it.",
+        "it worked on many levels.",
+        "it was too cheesy.",
+        "Na.",
+        "it spread too far.",
+        "I mist.",
+        "it was up to something."
+      ]),
+
+      () => pick(localCringeJokes)
+    ];
+
+    const sources = [
+      {
+        name: "GroanDeck random",
+        getJoke: fetchGroanDeckRandom
+      },
+      {
+        name: "GroanDeck category",
+        getJoke: fetchGroanDeckCategoryList
+      },
+      {
+        name: "icanhazdadjoke",
+        getJoke: fetchIcanhazDadJoke
+      },
+      {
+        name: "JokeAPI pun",
+        getJoke: fetchJokeApi
+      },
+      {
+        name: "Official Joke API",
+        getJoke: fetchOfficialJoke
+      },
+      {
+        name: "Official Joke API batch",
+        getJoke: fetchOfficialBatchJoke
+      },
+      {
+        name: "Local cringe engine",
+        getJoke: fetchLocalJoke
+      }
+    ];
+
+    function safeJsonParse(value, fallback) {
+      try {
+        return value ? JSON.parse(value) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function pick(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function cleanText(value) {
+      return String(value || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function addCringeCloser(text) {
+      const cleaned = cleanText(text);
+
+      if (!cleaned) return "";
+
+      if (Math.random() < 0.75) {
+        return cleaned + pick(cringeClosers);
+      }
+
+      return cleaned;
+    }
+
+    function formatSetupPunchline(setup, punchline) {
+      const cleanSetup = cleanText(setup);
+      const cleanPunchline = cleanText(punchline);
+
+      if (cleanSetup && cleanPunchline) {
+        return cleanSetup + " " + cleanPunchline;
+      }
+
+      return cleanSetup || cleanPunchline;
+    }
+
+    async function fetchJson(url, options = {}, timeoutMs = 7000) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+      try {
+        const response = await fetch(url, {
+          ...options,
+          signal: controller.signal
+        });
+
+        clearTimeout(timeout);
+
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+
+        return await response.json();
+      } catch (error) {
+        clearTimeout(timeout);
+        throw error;
+      }
+    }
+
+    async function fetchGroanDeckRandom() {
+      const category = pick(groanCategories);
+      const url = "https://groandeck.com/api/v1/random?category=" + encodeURIComponent(category);
+      const data = await fetchJson(url);
+
+      const text = formatSetupPunchline(data.setup, data.punchline);
+
+      if (!text) throw new Error("GroanDeck random returned no joke");
+
+      return {
+        text: addCringeCloser(text),
+        source: "GroanDeck random: " + category
+      };
+    }
+
+    async function fetchGroanDeckCategoryList() {
+      const category = pick(groanCategories);
+      const randomPage = Math.floor(1 + Math.random() * 8);
+      let url = "https://groandeck.com/api/v1/jokes?category=" + encodeURIComponent(category) + "&page=" + randomPage + "&limit=20";
+      let data = await fetchJson(url);
+
+      if (!data.jokes || !Array.isArray(data.jokes) || data.jokes.length === 0) {
+        url = "https://groandeck.com/api/v1/jokes?category=" + encodeURIComponent(category) + "&page=1&limit=20";
+        data = await fetchJson(url);
+      }
+
+      if (!data.jokes || !Array.isArray(data.jokes) || data.jokes.length === 0) {
+        throw new Error("GroanDeck category list returned no jokes");
+      }
+
+      const joke = pick(data.jokes);
+      const text = formatSetupPunchline(joke.setup, joke.punchline);
+
+      if (!text) throw new Error("GroanDeck category joke was empty");
+
+      return {
+        text: addCringeCloser(text),
+        source: "GroanDeck list: " + category
+      };
+    }
+
+    async function fetchIcanhazDadJoke() {
+      const data = await fetchJson("https://icanhazdadjoke.com/", {
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      if (!data.joke) throw new Error("icanhazdadjoke returned no joke");
+
+      return {
+        text: addCringeCloser(data.joke),
+        source: "icanhazdadjoke"
+      };
+    }
+
+    async function fetchJokeApi() {
+      const url = "https://v2.jokeapi.dev/joke/Miscellaneous,Pun,Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit";
+      const data = await fetchJson(url);
+
+      let text = "";
+
+      if (data.type === "single") {
+        text = cleanText(data.joke);
+      } else {
+        text = formatSetupPunchline(data.setup, data.delivery);
+      }
+
+      if (!text) throw new Error("JokeAPI returned no joke");
+
+      return {
+        text: addCringeCloser(text),
+        source: "JokeAPI"
+      };
+    }
+
+    async function fetchOfficialJoke() {
+      const data = await fetchJson("https://official-joke-api.appspot.com/random_joke");
+
+      const text = formatSetupPunchline(data.setup, data.punchline);
+
+      if (!text) throw new Error("Official Joke API returned no joke");
+
+      return {
+        text: addCringeCloser(text),
+        source: "Official Joke API"
+      };
+    }
+
+    async function fetchOfficialBatchJoke() {
+      const data = await fetchJson("https://official-joke-api.appspot.com/jokes/random/10");
+
+      if (!Array.isArray(data) || data.length === 0) {
+        throw new Error("Official batch returned no jokes");
+      }
+
+      const joke = pick(data);
+      const text = formatSetupPunchline(joke.setup, joke.punchline);
+
+      if (!text) throw new Error("Official batch joke was empty");
+
+      return {
+        text: addCringeCloser(text),
+        source: "Official Joke API batch"
+      };
+    }
+
+    async function fetchLocalJoke() {
+      return {
+        text: pick(localTemplates)() + pick(cringeClosers),
+        source: "Local cringe engine"
+      };
+    }
+
+    function createFloaters() {
+      for (let i = 0; i < 34; i++) {
+        const span = document.createElement("span");
+        span.className = "floater";
+        span.textContent = pick(chaosEmojis);
+        span.style.left = Math.random() * 100 + "%";
+        span.style.top = Math.random() * 100 + "%";
+        span.style.animationDelay = (Math.random() * 8) + "s";
+        span.style.animationDuration = (7 + Math.random() * 8) + "s";
+        chaosBg.appendChild(span);
+      }
+    }
+
+    function cringeExplosion() {
+      for (let i = 0; i < 10; i++) {
+        const span = document.createElement("span");
+        span.className = "pop";
+        span.textContent = pick(chaosEmojis);
+        span.style.left = (20 + Math.random() * 60) + "vw";
+        span.style.top = (35 + Math.random() * 30) + "vh";
+        document.body.appendChild(span);
+
+        setTimeout(() => {
+          span.remove();
+        }, 1000);
+      }
+    }
+
+    function saveJoke(joke, source) {
+      jokeEl.textContent = joke;
+      sourceEl.textContent = source;
+
+      count += 1;
+      countEl.textContent = count;
+      localStorage.setItem("goblin_joke_count", String(count));
+
+      const cringe = Math.floor(80 + Math.random() * 21);
+      cringeEl.textContent = cringe + "%";
+
+      history.unshift({
+        joke,
+        source
+      });
+
+      history = history.slice(0, 8);
+      localStorage.setItem("goblin_joke_history", JSON.stringify(history));
+
+      renderHistory();
+
+      page.classList.remove("shake");
+      void page.offsetWidth;
+      page.classList.add("shake");
+
+      cringeExplosion();
+    }
+
+    async function summonJoke() {
+      bigButton.disabled = true;
+
+      bigButton.textContent = pick([
+        "ROTATING THE JOKE WHEEL...",
+        "CONSULTING THE PUN COUNCIL...",
+        "SEARCHING FOR CHEESE...",
+        "CHECKING DAD DATABASES...",
+        "LOADING A LEGAL GROAN..."
+      ]);
+
+      const startIndex = sourceIndex % sources.length;
+      sourceIndex = (sourceIndex + 1) % sources.length;
+      localStorage.setItem("goblin_source_index", String(sourceIndex));
+
+      for (let i = 0; i < sources.length; i++) {
+        const current = sources[(startIndex + i) % sources.length];
+
+        try {
+          sourceEl.textContent = "Trying " + current.name + "...";
+
+          const result = await current.getJoke();
+
+          if (result && result.text) {
+            saveJoke(result.text, result.source || current.name);
+            resetButton();
+            return;
+          }
+        } catch (error) {
+          console.warn("Source failed:", current.name, error);
+        }
+      }
+
+      const fallback = await fetchLocalJoke();
+      saveJoke(fallback.text, fallback.source);
+      resetButton();
+    }
+
+    function resetButton() {
+      bigButton.disabled = false;
+      bigButton.textContent = pick([
+        "SUMMON A DAD JOKE",
+        "PRESS FOR A TERRIBLE PUN",
+        "RELEASE THE GROAN",
+        "DEPLOY THE CHEESE",
+        "ONE MORE, UNFORTUNATELY",
+        "SPIN THE CRINGE WHEEL"
+      ]);
+    }
+
+    function renderHistory() {
+      historyEl.innerHTML = "";
+
+      if (history.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "No groans yet. The room is still safe.";
+        historyEl.appendChild(li);
+        return;
+      }
+
+      history.forEach(item => {
+        const li = document.createElement("li");
+
+        const source = document.createElement("span");
+        source.className = "history-source";
+        source.textContent = item.source || "Unknown source";
+
+        const text = document.createElement("span");
+        text.textContent = item.joke || item;
+
+        li.appendChild(source);
+        li.appendChild(text);
+        historyEl.appendChild(li);
+      });
+    }
+
+    function renderRotationLine() {
+      rotationLine.textContent = sources.map(source => source.name).join(" → ");
+    }
+
+    bigButton.addEventListener("click", summonJoke);
+
+    document.addEventListener("keydown", function(event) {
+      if (event.code === "Space" || event.code === "Enter") {
+        event.preventDefault();
+        summonJoke();
+      }
+    });
+
+    countEl.textContent = count;
+    renderRotationLine();
+    createFloaters();
+    renderHistory();
+  </script>
+</body>
+</html>
