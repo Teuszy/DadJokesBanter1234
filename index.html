@@ -4,21 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Dad Joke Detonator</title>
+  <title>Dad Joke Goblin</title>
 
   <style>
     :root {
-      --bg: #07070b;
-      --card: #14141f;
-      --card2: #0f0f17;
-      --text: #f4f4f5;
-      --muted: #a1a1aa;
-      --border: #2b2b3a;
-      --red: #ff3b3b;
-      --yellow: #facc15;
-      --green: #22c55e;
-      --blue: #38bdf8;
+      --pink: #ff4fd8;
+      --yellow: #fff04a;
+      --green: #39ff88;
+      --blue: #42d9ff;
       --purple: #a855f7;
+      --black: #060608;
+      --white: #ffffff;
     }
 
     * {
@@ -28,475 +24,433 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
+      font-family: "Comic Sans MS", "Comic Sans", Arial, sans-serif;
+      color: var(--white);
       background:
-        radial-gradient(circle at 15% 10%, rgba(255, 59, 59, 0.28), transparent 28%),
-        radial-gradient(circle at 85% 0%, rgba(56, 189, 248, 0.18), transparent 28%),
-        radial-gradient(circle at 50% 100%, rgba(168, 85, 247, 0.18), transparent 35%),
-        linear-gradient(135deg, #050509, #101018);
-      padding: 18px;
+        radial-gradient(circle at 20% 20%, rgba(255, 79, 216, 0.45), transparent 25%),
+        radial-gradient(circle at 80% 10%, rgba(57, 255, 136, 0.35), transparent 25%),
+        radial-gradient(circle at 50% 100%, rgba(66, 217, 255, 0.35), transparent 35%),
+        linear-gradient(135deg, #08080c, #1b1029, #09090f);
+      overflow-x: hidden;
+      padding: 16px;
     }
 
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .hero {
-      position: relative;
+    .chaos-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
       overflow: hidden;
-      text-align: center;
-      background: rgba(20, 20, 31, 0.95);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 32px;
-      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+      z-index: 0;
     }
 
-    .ribbon {
+    .floater {
+      position: absolute;
+      font-size: clamp(1.6rem, 4vw, 4rem);
+      opacity: 0.16;
+      animation: floaty 9s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes floaty {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      50% { transform: translateY(-30px) rotate(18deg) scale(1.2); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); }
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04));
+      border: 5px solid var(--yellow);
+      border-radius: 36px;
+      padding: clamp(22px, 5vw, 46px);
+      text-align: center;
+      box-shadow:
+        0 0 0 8px rgba(255, 79, 216, 0.25),
+        0 35px 100px rgba(0, 0, 0, 0.62);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "ABSOLUTE NONSENSE MACHINE";
       position: absolute;
       top: 18px;
-      right: -46px;
-      transform: rotate(35deg);
-      background: var(--yellow);
-      color: #111;
-      font-weight: 900;
-      padding: 8px 48px;
-      font-size: 0.75rem;
+      left: -75px;
+      transform: rotate(-35deg);
+      background: var(--green);
+      color: #08110b;
+      font-weight: 1000;
+      padding: 10px 85px;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+    }
+
+    .card::after {
+      content: "100% DAD-POWERED";
+      position: absolute;
+      bottom: 22px;
+      right: -65px;
+      transform: rotate(-25deg);
+      background: var(--pink);
+      color: white;
+      font-weight: 1000;
+      padding: 10px 75px;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(2.4rem, 8vw, 5.8rem);
-      line-height: 0.92;
-      letter-spacing: -2px;
+      font-size: clamp(3rem, 12vw, 8rem);
+      line-height: 0.86;
+      letter-spacing: -4px;
+      text-shadow:
+        5px 5px 0 #ff4fd8,
+        10px 10px 0 #42d9ff,
+        15px 15px 0 rgba(0,0,0,0.45);
+      transform: rotate(-2deg);
     }
 
     .subtitle {
-      max-width: 730px;
-      margin: 16px auto 0;
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 1rem;
-    }
-
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .badge {
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--yellow);
-      border-radius: 999px;
-      padding: 8px 13px;
-      font-size: 0.86rem;
+      margin: 24px auto 0;
+      max-width: 720px;
+      color: #f7f7f7;
+      font-size: clamp(1rem, 3vw, 1.35rem);
+      line-height: 1.45;
       font-weight: 800;
     }
 
     .joke-box {
-      min-height: 230px;
-      margin: 32px auto 22px;
-      padding: 34px;
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)),
-        var(--card2);
+      position: relative;
+      margin: 34px auto;
+      min-height: 250px;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          rgba(255, 240, 74, 0.13),
+          rgba(255, 240, 74, 0.13) 12px,
+          rgba(255, 79, 216, 0.13) 12px,
+          rgba(255, 79, 216, 0.13) 24px
+        ),
+        rgba(0,0,0,0.48);
+      border: 4px dashed var(--green);
+      border-radius: 30px;
+      padding: clamp(22px, 5vw, 40px);
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.45);
+    }
+
+    .joke-box::before {
+      content: "🚨 DAD DAMAGE DETECTED 🚨";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%) rotate(1deg);
+      background: var(--yellow);
+      color: #111;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 1000;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      border: 3px solid black;
     }
 
     #joke {
       margin: 0;
-      font-size: clamp(1.35rem, 4vw, 2.6rem);
-      line-height: 1.3;
-      font-weight: 900;
+      font-size: clamp(1.45rem, 5vw, 3.2rem);
+      line-height: 1.18;
+      font-weight: 1000;
+      color: white;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.65);
     }
 
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+    .button-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
     }
 
-    button {
-      border: none;
+    #bigButton {
+      position: relative;
+      width: min(100%, 620px);
+      min-height: 120px;
+      border: 6px solid black;
       border-radius: 999px;
-      padding: 15px 18px;
       cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 900;
-      background: var(--yellow);
-      color: #111;
+      background:
+        radial-gradient(circle at 30% 20%, #fff, transparent 14%),
+        linear-gradient(135deg, var(--yellow), #ff8a00, var(--pink));
+      color: #101010;
+      font-size: clamp(1.4rem, 6vw, 3.4rem);
+      font-weight: 1000;
+      font-family: inherit;
+      box-shadow:
+        0 16px 0 #6d2400,
+        0 30px 60px rgba(0,0,0,0.55);
+      transform: rotate(1deg);
       transition: 0.12s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.08);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    .red { background: var(--red); color: #fff; }
-    .green { background: var(--green); color: #041207; }
-    .blue { background: var(--blue); color: #041016; }
-    .purple { background: var(--purple); color: #fff; }
-    .dark {
-      background: #272738;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .stats {
-      margin-top: 18px;
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 0.95rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-      margin-top: 20px;
-    }
-
-    .panel {
-      background: rgba(20, 20, 31, 0.94);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 20px;
-      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
-    }
-
-    .panel h2 {
-      margin: 0 0 13px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      letter-spacing: 1px;
       text-transform: uppercase;
     }
 
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
+    #bigButton:hover {
+      transform: rotate(-1deg) scale(1.025);
+      filter: saturate(1.3);
+    }
+
+    #bigButton:active {
+      transform: translateY(12px) scale(0.98);
+      box-shadow:
+        0 4px 0 #6d2400,
+        0 16px 38px rgba(0,0,0,0.45);
+    }
+
+    .stats {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
       gap: 10px;
     }
 
-    li {
-      background: rgba(255,255,255,0.045);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px;
-      color: #e4e4e7;
-      line-height: 1.45;
-      font-size: 0.93rem;
+    .pill {
+      background: rgba(0,0,0,0.42);
+      border: 3px solid rgba(255,255,255,0.22);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+      color: white;
+      font-size: 0.92rem;
     }
 
-    .small {
-      color: var(--muted);
-      font-size: 0.82rem;
-      margin-top: 5px;
-    }
-
-    .footer {
+    .mini-panel {
+      background: rgba(0,0,0,0.36);
+      border: 3px solid rgba(255,255,255,0.16);
+      border-radius: 26px;
+      padding: 18px;
       text-align: center;
-      color: var(--muted);
-      margin: 20px 0 0;
-      font-size: 0.85rem;
-      line-height: 1.5;
+      box-shadow: 0 20px 55px rgba(0,0,0,0.35);
     }
 
-    @media (max-width: 850px) {
-      .controls {
-        grid-template-columns: repeat(2, 1fr);
+    .mini-panel h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    #history {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #history li {
+      background: rgba(255,255,255,0.09);
+      border: 2px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 12px;
+      font-size: 0.95rem;
+      line-height: 1.35;
+      color: #f4f4f5;
+    }
+
+    .shake {
+      animation: shake 0.35s linear;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(-8px, 4px) rotate(-1deg); }
+      40% { transform: translate(8px, -4px) rotate(1deg); }
+      60% { transform: translate(-6px, 3px) rotate(-1deg); }
+      80% { transform: translate(6px, -3px) rotate(1deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    .burp {
+      position: fixed;
+      z-index: 50;
+      font-size: 2.5rem;
+      pointer-events: none;
+      animation: pop 1s ease forwards;
+    }
+
+    @keyframes pop {
+      0% {
+        opacity: 0;
+        transform: scale(0.4) rotate(0deg);
+      }
+      25% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-120px) scale(1.8) rotate(25deg);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        border-radius: 26px;
+        border-width: 4px;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .ribbon {
+      .card::before,
+      .card::after {
         display: none;
       }
-    }
 
-    @media (max-width: 520px) {
-      body {
-        padding: 12px;
-      }
-
-      .hero {
-        padding: 22px;
-      }
-
-      .controls {
-        grid-template-columns: 1fr;
+      #bigButton {
+        min-height: 105px;
       }
 
       .joke-box {
-        padding: 22px;
-        min-height: 200px;
+        min-height: 230px;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="wrap">
-    <section class="hero">
-      <div class="ribbon">DAD JOKE ALERT</div>
+  <div class="chaos-bg" id="chaosBg"></div>
 
-      <h1>Dad Joke<br>Detonator</h1>
+  <main class="page" id="page">
+    <section class="card">
+      <h1>Dad Joke<br>Goblin</h1>
 
       <p class="subtitle">
-        A free joke machine with no paid API keys, three online joke sources, a local backup generator,
-        favourites, history, copy, share, and enough dad energy to make the room leave.
+        One button. Infinite nonsense. Questionable taste. Zero apology.
       </p>
 
-      <div class="badges">
-        <span class="badge">No paid keys</span>
-        <span class="badge">Free APIs</span>
-        <span class="badge">Local fallback</span>
-        <span class="badge">Mobile ready</span>
-      </div>
-
       <section class="joke-box">
-        <p id="joke">Press a button. Commit comedy damage.</p>
+        <p id="joke">
+          Press the big stupid button and receive verbal diarrhoea.
+        </p>
       </section>
 
-      <div class="controls">
-        <button class="red" id="localBtn">Edgy Local Joke</button>
-        <button class="green" id="dadBtn">Dad Joke API</button>
-        <button class="blue" id="jokeApiBtn">JokeAPI</button>
-        <button class="purple" id="officialBtn">Official Joke API</button>
-
-        <button class="dark" id="randomBtn">Random Source</button>
-        <button class="dark" id="copyBtn">Copy</button>
-        <button class="dark" id="shareBtn">Share</button>
-        <button class="dark" id="favBtn">Favourite</button>
+      <div class="button-wrap">
+        <button id="bigButton">SUMMON A RUDE DAD JOKE</button>
       </div>
 
       <div class="stats">
-        Jokes generated: <span id="count">0</span><br>
-        Current source: <span id="source">Idle</span>
+        <div class="pill">Jokes fired: <span id="count">0</span></div>
+        <div class="pill">Source: <span id="source">Goblin idle</span></div>
+        <div class="pill">Cringe level: <span id="cringe">0%</span></div>
       </div>
     </section>
 
-    <section class="grid">
-      <div class="panel">
-        <h2>Recent Crimes Against Comedy</h2>
-        <ul id="history"></ul>
-      </div>
-
-      <div class="panel">
-        <h2>Free Sources Built In</h2>
-        <ul>
-          <li>
-            <strong>icanhazdadjoke</strong>
-            <div class="small">Free dad joke API. No API key.</div>
-          </li>
-          <li>
-            <strong>JokeAPI</strong>
-            <div class="small">Free joke API. Safe-mode filters enabled.</div>
-          </li>
-          <li>
-            <strong>Official Joke API</strong>
-            <div class="small">Free setup-and-punchline jokes.</div>
-          </li>
-          <li>
-            <strong>Local Generator</strong>
-            <div class="small">Works even if the internet/API fails.</div>
-          </li>
-        </ul>
-      </div>
+    <section class="mini-panel">
+      <h2>Recent emotional damage</h2>
+      <ul id="history"></ul>
     </section>
-
-    <section class="grid">
-      <div class="panel">
-        <h2>Favourites</h2>
-        <ul id="favourites"></ul>
-      </div>
-
-      <div class="panel">
-        <h2>Controls</h2>
-        <ul>
-          <li>Spacebar = local joke</li>
-          <li>Enter = online dad joke</li>
-          <li>Random Source = chooses any available source</li>
-          <li>Favourites and history are saved in your browser</li>
-        </ul>
-      </div>
-    </section>
-
-    <p class="footer">
-      Edgy, not hateful. Free APIs can go down, so the local generator stays loaded.
-    </p>
   </main>
 
   <script>
     "use strict";
 
-    const jokeText = document.getElementById("joke");
-    const sourceText = document.getElementById("source");
-    const countText = document.getElementById("count");
-    const historyList = document.getElementById("history");
-    const favouritesList = document.getElementById("favourites");
+    const jokeEl = document.getElementById("joke");
+    const countEl = document.getElementById("count");
+    const sourceEl = document.getElementById("source");
+    const cringeEl = document.getElementById("cringe");
+    const historyEl = document.getElementById("history");
+    const bigButton = document.getElementById("bigButton");
+    const page = document.getElementById("page");
+    const chaosBg = document.getElementById("chaosBg");
 
-    const localBtn = document.getElementById("localBtn");
-    const dadBtn = document.getElementById("dadBtn");
-    const jokeApiBtn = document.getElementById("jokeApiBtn");
-    const officialBtn = document.getElementById("officialBtn");
-    const randomBtn = document.getElementById("randomBtn");
-    const copyBtn = document.getElementById("copyBtn");
-    const shareBtn = document.getElementById("shareBtn");
-    const favBtn = document.getElementById("favBtn");
+    let count = Number(localStorage.getItem("goblin_joke_count")) || 0;
+    let history = safeJsonParse(localStorage.getItem("goblin_joke_history"), []);
 
-    let count = Number(localStorage.getItem("dad_joke_count")) || 0;
-    let history = safeJsonParse(localStorage.getItem("dad_joke_history"), []);
-    let favourites = safeJsonParse(localStorage.getItem("dad_joke_favourites"), []);
-
-    const subjects = [
-      "my bank account",
-      "my Wi-Fi router",
-      "my fridge",
-      "my printer",
-      "my gym membership",
-      "my phone battery",
-      "my motivation",
-      "my sleep schedule",
-      "my left sock",
-      "my calendar",
-      "my car insurance",
-      "my unread emails",
-      "my online basket",
-      "my suitcase",
-      "my dignity",
-      "my group chat",
-      "my common sense",
-      "my delivery tracking page",
-      "my alarm clock",
-      "my microwave",
-      "my password manager",
-      "my self-control",
-      "my streaming subscription",
-      "my search history"
+    const chaosEmojis = [
+      "🤡", "💩", "🧀", "🧦", "🦆", "🔥", "🥴", "👹", "🍕", "🪠",
+      "🚽", "🧃", "🦷", "🧻", "🐸", "🥔", "🦀", "🧅", "🎺", "🫠"
     ];
 
-    const verbs = [
-      "ghosted me",
-      "filed a complaint",
-      "called HR",
-      "started a podcast",
-      "asked for a refund",
-      "left me on read",
-      "became self-aware",
-      "started charging rent",
-      "blocked my number",
-      "sent me an invoice",
-      "deleted itself",
-      "asked for space",
-      "went premium",
-      "quit without notice",
-      "became emotionally unavailable",
-      "formed a union",
-      "reported me to customer service",
-      "started judging me",
-      "changed the locks"
+    const rudeLocalJokes = [
+      "I told my wallet I needed support. It said, “Mate, I’m emptier than your promises.”",
+      "My toilet and I have a lot in common. We both deal with my crap daily.",
+      "I asked my fridge for advice. It said, “Stop opening me like I have answers, you absolute snack gremlin.”",
+      "I tried to flirt with my Wi-Fi. It said the connection was weak and emotionally unavailable.",
+      "My bank account ghosted me. Honestly, I respect the boundaries.",
+      "I told my alarm clock it was annoying. It said, “I’m not the one wasting his life in bed, champ.”",
+      "My printer has started therapy because I keep asking it to work under pressure.",
+      "I bought a camouflage jacket, but I can’t see myself wearing it. Which is still better than seeing my life choices.",
+      "I asked my mirror for honesty. It said, “Legally, I cannot say that out loud.”",
+      "My socks left me. Apparently even they could smell the relationship was dead.",
+      "I told my sofa I needed space. It said, “You’ve been spreading across me for years, you furniture parasite.”",
+      "My phone battery dies faster than my motivation on a Monday morning.",
+      "I asked my calendar for a break. It scheduled a breakdown and invited my anxiety.",
+      "I tried being mature once. Worst 14 seconds of my life.",
+      "My diet plan and my printer have one thing in common: both jam when things get serious.",
+      "I told my search history I was proud of it. It deleted itself out of shame.",
+      "My common sense packed a bag and left. It said it was tired of working unpaid overtime.",
+      "I asked my microwave if I was hot. It said, “Only in short, disappointing bursts.”",
+      "My group chat has more red flags than a budget circus.",
+      "I went to buy inner peace, but my card was declined for suspicious optimism.",
+      "My gym membership said it misses me. Bit clingy for something I ignore professionally.",
+      "I tried to make a clean joke, but then my personality walked in wearing muddy shoes.",
+      "My motivation is like cheap toilet paper: thin, unreliable, and gone when needed.",
+      "I asked my coffee if it believed in me. It said, “I’m a drink, not a miracle worker.”",
+      "My cooking is so bad the smoke alarm has started seasoning itself.",
+      "I told my laundry basket I’d deal with it tomorrow. It laughed and evolved into furniture.",
+      "My password manager judged me so hard it suggested therapy as a security question.",
+      "I asked my suitcase if I was ready for travel. It said, “You pack like a raccoon having a panic attack.”",
+      "My car insurance costs so much it should legally call me beautiful.",
+      "I bought noise-cancelling headphones so I could finally ignore my own bad decisions in HD."
     ];
 
-    const punchlines = [
-      "Honestly, fair.",
-      "That is still the healthiest relationship I have.",
-      "I would argue, but it has receipts.",
-      "I tried to respond, but my confidence had already expired.",
-      "It said the problem was between the chair and the keyboard.",
-      "I asked why. It said, 'Because someone has to be the adult here.'",
-      "That hurt, but the delivery was excellent.",
-      "I was offended until I checked the evidence.",
-      "Even my toaster said, 'That was dark.'",
-      "I wanted closure. It gave me a tracking number.",
-      "I called it dramatic. It called me predictable.",
-      "That is not a red flag. That is a whole fire station.",
-      "I tried to cancel it, but it said I was the subscription.",
-      "The warranty covered everything except my decisions."
-    ];
+    const templates = [
+      () => "I tried talking to " + pick([
+        "my fridge", "my wallet", "my alarm clock", "my mirror", "my sofa",
+        "my phone", "my microwave", "my printer", "my Wi-Fi", "my calendar"
+      ]) + ", but it " + pick([
+        "filed a complaint", "blocked my number", "asked for space",
+        "called me a liability", "sent me an invoice", "left me on read",
+        "reported me to customer service", "changed the locks"
+      ]) + ". " + pick([
+        "Honestly, fair.",
+        "I was offended until I saw the evidence.",
+        "That hurt, but the delivery was excellent.",
+        "The warranty covers everything except my dignity.",
+        "I wanted closure. It gave me a tracking number.",
+        "That is not a red flag. That is a whole fire station."
+      ]),
 
-    const oneLiners = [
-      "My sense of humour has two settings: dad joke and court evidence.",
-      "I like my jokes like my phone battery: barely alive and causing panic.",
-      "My comedy career is like a supermarket self-checkout: unexpected item in emotional baggage area.",
-      "I told my problems to take a number. They started a loyalty scheme.",
-      "My motivation and my printer have one thing in common: both say they are ready, then do absolutely nothing.",
-      "I tried positive thinking. It tested negative.",
-      "I asked my calendar for a break. It scheduled a breakdown.",
-      "My password is 'incorrect' because every time I forget it, the computer reminds me.",
-      "I told my wallet we needed to talk. It said, 'About what? I am empty inside.'",
-      "I am not avoiding responsibilities. I am letting them mature emotionally.",
-      "I bought a camouflage jacket, but I cannot see myself wearing it.",
-      "I told my sofa I needed space. It said, 'You literally sit on me every night.'",
-      "I tried to make a joke about paper. It was tearable.",
-      "I started a band called 999 Megabytes. We still have not got a gig.",
-      "I used to hate facial hair, but then it grew on me.",
-      "I asked my coffee for advice. It said, 'You are bitter enough already.'",
-      "I tried to be normal once. Worst three minutes of my life.",
-      "I told my phone I needed privacy. It laughed in app permissions."
-    ];
+      () => "My " + pick([
+        "bank account", "motivation", "sleep schedule", "common sense",
+        "left sock", "diet plan", "life plan", "patience"
+      ]) + " is like " + pick([
+        "a cheap umbrella", "a supermarket self-checkout", "public Wi-Fi",
+        "hotel soap", "a suspicious kebab", "a wet cardboard box"
+      ]) + ": " + pick([
+        "technically present, but nobody trusts it.",
+        "collapses under the slightest pressure.",
+        "mostly disappointing and smells faintly of regret.",
+        "works until you actually need it.",
+        "somehow worse after midnight.",
+        "an insult to engineering and dignity."
+      ]),
 
-    const classicSetups = [
-      "I told my therapist I have a fear of speed bumps.",
-      "I bought a belt made of watches.",
-      "I asked the cemetery if they had Wi-Fi.",
-      "I tried to organise a hide and seek tournament.",
-      "I told my printer it was useless.",
-      "I gave my vacuum cleaner a performance review.",
-      "I asked my fridge why it was always running.",
-      "I tried to sue my calendar.",
-      "I bought a book about glue.",
-      "I asked my bank if I could have some interest.",
-      "I tried to make a joke about unemployment.",
-      "I opened a bakery for pessimists.",
-      "I started a dating app for ghosts.",
-      "I asked my alarm clock for emotional support.",
-      "I tried to write a joke about construction.",
-      "I bought noise-cancelling headphones.",
-      "I asked my mirror for honest feedback.",
-      "I started a gym for lazy people.",
-      "I tried to make a joke about broken elevators."
-    ];
-
-    const classicPunchlines = [
-      "I am slowly getting over it.",
-      "It was a waist of time.",
-      "They said the connection was dead.",
-      "Good players are hard to find.",
-      "Now it is refusing to work out of spite.",
-      "It said I was just pushing it around.",
-      "It said, 'Because you keep opening up and taking things badly.'",
-      "It said my days were numbered.",
-      "I could not put it down.",
-      "They said my account was already a joke.",
-      "None of them work.",
-      "Business is crumbling.",
-      "Everyone keeps ghosting each other.",
-      "It said, 'I wake you up every day and this is the thanks I get?'",
-      "I am still working on it.",
-      "Now I cannot hear criticism, which is basically personal growth.",
-      "It said, 'You are not ready for that level of truth.'",
-      "It is called eventually fitness.",
-      "It works on many levels."
+      () => pick(rudeLocalJokes)
     ];
 
     function safeJsonParse(value, fallback) {
@@ -511,270 +465,157 @@
       return array[Math.floor(Math.random() * array.length)];
     }
 
-    function capitalise(text) {
-      return text.charAt(0).toUpperCase() + text.slice(1);
+    function createFloaters() {
+      for (let i = 0; i < 34; i++) {
+        const span = document.createElement("span");
+        span.className = "floater";
+        span.textContent = pick(chaosEmojis);
+        span.style.left = Math.random() * 100 + "%";
+        span.style.top = Math.random() * 100 + "%";
+        span.style.animationDelay = (Math.random() * 8) + "s";
+        span.style.animationDuration = (7 + Math.random() * 8) + "s";
+        chaosBg.appendChild(span);
+      }
     }
 
-    function setButtonsDisabled(disabled) {
-      const buttons = document.querySelectorAll("button");
-      buttons.forEach(button => button.disabled = disabled);
+    function burpExplosion() {
+      for (let i = 0; i < 10; i++) {
+        const span = document.createElement("span");
+        span.className = "burp";
+        span.textContent = pick(chaosEmojis);
+        span.style.left = (20 + Math.random() * 60) + "vw";
+        span.style.top = (35 + Math.random() * 30) + "vh";
+        document.body.appendChild(span);
+
+        setTimeout(() => {
+          span.remove();
+        }, 1000);
+      }
     }
 
     function saveJoke(joke, source) {
-      const cleanJoke = String(joke || "").trim();
-
-      if (!cleanJoke) {
-        generateLocalJoke();
-        return;
-      }
-
-      jokeText.textContent = cleanJoke;
-      sourceText.textContent = source;
+      jokeEl.textContent = joke;
+      sourceEl.textContent = source;
 
       count += 1;
-      countText.textContent = count;
-      localStorage.setItem("dad_joke_count", String(count));
+      countEl.textContent = count;
+      localStorage.setItem("goblin_joke_count", String(count));
 
-      history.unshift({
-        joke: cleanJoke,
-        source: source,
-        time: new Date().toLocaleString()
-      });
+      const cringe = Math.floor(69 + Math.random() * 31);
+      cringeEl.textContent = cringe + "%";
 
-      history = history.slice(0, 12);
-      localStorage.setItem("dad_joke_history", JSON.stringify(history));
+      history.unshift(joke);
+      history = history.slice(0, 6);
+      localStorage.setItem("goblin_joke_history", JSON.stringify(history));
 
       renderHistory();
+
+      page.classList.remove("shake");
+      void page.offsetWidth;
+      page.classList.add("shake");
+
+      burpExplosion();
     }
 
-    function generateLocalJoke() {
-      const templates = [
-        function () {
-          return "I tried talking to " + pick(subjects) + ", but it " + pick(verbs) + ". " + pick(punchlines);
-        },
-        function () {
-          const index = Math.floor(Math.random() * classicSetups.length);
-          return classicSetups[index] + " " + classicPunchlines[index];
-        },
-        function () {
-          return pick(oneLiners);
-        },
-        function () {
-          return capitalise(pick(subjects)) + " told me to take responsibility, so I blamed JavaScript.";
-        },
-        function () {
-          return "I asked " + pick(subjects) + " if it believed in second chances. It said, 'With your track record? I believe in backups.'";
-        }
-      ];
-
-      saveJoke(pick(templates)(), "Local generator");
+    function localRudeJoke() {
+      saveJoke(pick(templates)(), "Local goblin brain");
     }
 
-    async function fetchWithTimeout(url, options = {}, timeoutMs = 7000) {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    async function getApiJoke() {
+      const randomChoice = Math.random();
 
       try {
-        const response = await fetch(url, {
-          ...options,
-          signal: controller.signal
-        });
-
-        clearTimeout(timeout);
-        return response;
-      } catch (error) {
-        clearTimeout(timeout);
-        throw error;
-      }
-    }
-
-    async function fetchIcanhazdadjoke() {
-      setButtonsDisabled(true);
-      sourceText.textContent = "Fetching from icanhazdadjoke...";
-
-      try {
-        const response = await fetchWithTimeout("https://icanhazdadjoke.com/", {
-          headers: {
-            "Accept": "application/json"
-          }
-        });
-
-        if (!response.ok) throw new Error("icanhazdadjoke failed");
-
-        const data = await response.json();
-        saveJoke(data.joke, "icanhazdadjoke API");
-      } catch {
-        saveJoke("The dad joke API failed, so JavaScript stepped in. That was probably the second mistake.", "API fallback");
-      } finally {
-        setButtonsDisabled(false);
-      }
-    }
-
-    async function fetchJokeAPI() {
-      setButtonsDisabled(true);
-      sourceText.textContent = "Fetching from JokeAPI...";
-
-      const url = "https://v2.jokeapi.dev/joke/Miscellaneous,Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single";
-
-      try {
-        const response = await fetchWithTimeout(url);
-
-        if (!response.ok) throw new Error("JokeAPI failed");
-
-        const data = await response.json();
-        saveJoke(data.joke, "JokeAPI safe mode");
-      } catch {
-        saveJoke("JokeAPI refused to answer. Even the server has standards.", "API fallback");
-      } finally {
-        setButtonsDisabled(false);
-      }
-    }
-
-    async function fetchOfficialJoke() {
-      setButtonsDisabled(true);
-      sourceText.textContent = "Fetching from Official Joke API...";
-
-      try {
-        const response = await fetchWithTimeout("https://official-joke-api.appspot.com/random_joke");
-
-        if (!response.ok) throw new Error("Official Joke API failed");
-
-        const data = await response.json();
-        saveJoke(data.setup + " " + data.punchline, "Official Joke API");
-      } catch {
-        saveJoke("The official joke failed unofficially. That is bureaucracy with a punchline.", "API fallback");
-      } finally {
-        setButtonsDisabled(false);
-      }
-    }
-
-    function randomSource() {
-      const options = [
-        generateLocalJoke,
-        fetchIcanhazdadjoke,
-        fetchJokeAPI,
-        fetchOfficialJoke
-      ];
-
-      pick(options)();
-    }
-
-    async function copyJoke() {
-      const text = jokeText.textContent.trim();
-
-      try {
-        await navigator.clipboard.writeText(text);
-        alert("Copied. Use irresponsibly.");
-      } catch {
-        alert("Copy failed. Your browser has developed standards.");
-      }
-    }
-
-    async function shareJoke() {
-      const text = jokeText.textContent.trim();
-
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: "Dad Joke Detonator",
-            text: text
+        if (randomChoice < 0.5) {
+          const res = await fetch("https://icanhazdadjoke.com/", {
+            headers: { "Accept": "application/json" }
           });
-        } catch {
+
+          if (!res.ok) throw new Error("Dad API failed");
+
+          const data = await res.json();
+
+          if (!data.joke) throw new Error("No joke");
+
+          saveJoke(data.joke + " Still less embarrassing than your browser history.", "Free dad joke API");
           return;
         }
-      } else {
-        copyJoke();
+
+        const res = await fetch("https://official-joke-api.appspot.com/random_joke");
+
+        if (!res.ok) throw new Error("Official API failed");
+
+        const data = await res.json();
+
+        if (!data.setup || !data.punchline) throw new Error("No joke");
+
+        saveJoke(data.setup + " " + data.punchline + " Filthy behaviour from a grown website.", "Official Joke API");
+      } catch {
+        localRudeJoke();
       }
     }
 
-    function saveFavourite() {
-      const text = jokeText.textContent.trim();
+    function summonJoke() {
+      bigButton.disabled = true;
+      bigButton.textContent = pick([
+        "COOKING NONSENSE...",
+        "LOADING CRINGE...",
+        "SUMMONING GOBLIN...",
+        "REHEATING BAD IDEAS...",
+        "OPENING THE DAD PORTAL..."
+      ]);
 
-      if (!text || favourites.includes(text)) return;
+      setTimeout(() => {
+        const useApi = Math.random() < 0.28;
 
-      favourites.unshift(text);
-      favourites = favourites.slice(0, 12);
-      localStorage.setItem("dad_joke_favourites", JSON.stringify(favourites));
+        if (useApi) {
+          getApiJoke().finally(() => resetButton());
+        } else {
+          localRudeJoke();
+          resetButton();
+        }
+      }, 420);
+    }
 
-      renderFavourites();
+    function resetButton() {
+      bigButton.disabled = false;
+      bigButton.textContent = pick([
+        "SUMMON ANOTHER RUDE DAD JOKE",
+        "HIT ME AGAIN, GOBLIN",
+        "MORE VERBAL DIARRHOEA",
+        "DEPLOY THE CRINGE CANNON",
+        "PRESS FOR NONSENSE"
+      ]);
     }
 
     function renderHistory() {
-      historyList.innerHTML = "";
+      historyEl.innerHTML = "";
 
       if (history.length === 0) {
         const li = document.createElement("li");
-        li.textContent = "No jokes yet. Society remains temporarily safe.";
-        historyList.appendChild(li);
+        li.textContent = "No damage yet. The public remains safe.";
+        historyEl.appendChild(li);
         return;
       }
 
-      history.forEach(item => {
+      history.forEach(joke => {
         const li = document.createElement("li");
-
-        const source = document.createElement("strong");
-        source.textContent = item.source;
-
-        const joke = document.createElement("div");
-        joke.textContent = item.joke;
-
-        const time = document.createElement("div");
-        time.className = "small";
-        time.textContent = item.time;
-
-        li.appendChild(source);
-        li.appendChild(joke);
-        li.appendChild(time);
-
-        historyList.appendChild(li);
+        li.textContent = joke;
+        historyEl.appendChild(li);
       });
     }
 
-    function renderFavourites() {
-      favouritesList.innerHTML = "";
+    bigButton.addEventListener("click", summonJoke);
 
-      if (favourites.length === 0) {
-        const li = document.createElement("li");
-        li.textContent = "No favourites yet. Apparently you still have standards.";
-        favouritesList.appendChild(li);
-        return;
+    document.addEventListener("keydown", function(event) {
+      if (event.code === "Space" || event.code === "Enter") {
+        event.preventDefault();
+        summonJoke();
       }
+    });
 
-      favourites.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        favouritesList.appendChild(li);
-      });
-    }
-
-    function init() {
-      countText.textContent = count;
-      renderHistory();
-      renderFavourites();
-
-      localBtn.addEventListener("click", generateLocalJoke);
-      dadBtn.addEventListener("click", fetchIcanhazdadjoke);
-      jokeApiBtn.addEventListener("click", fetchJokeAPI);
-      officialBtn.addEventListener("click", fetchOfficialJoke);
-      randomBtn.addEventListener("click", randomSource);
-      copyBtn.addEventListener("click", copyJoke);
-      shareBtn.addEventListener("click", shareJoke);
-      favBtn.addEventListener("click", saveFavourite);
-
-      document.addEventListener("keydown", function (event) {
-        if (event.code === "Space") {
-          event.preventDefault();
-          generateLocalJoke();
-        }
-
-        if (event.code === "Enter") {
-          event.preventDefault();
-          fetchIcanhazdadjoke();
-        }
-      });
-    }
-
-    init();
+    countEl.textContent = count;
+    createFloaters();
+    renderHistory();
   </script>
 </body>
 </html>
