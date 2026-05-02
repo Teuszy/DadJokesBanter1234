@@ -12,7 +12,6 @@
       --yellow: #fff04a;
       --green: #39ff88;
       --blue: #42d9ff;
-      --purple: #a855f7;
       --black: #060608;
       --white: #ffffff;
     }
@@ -85,29 +84,29 @@
     }
 
     .card::before {
-      content: "ABSOLUTE NONSENSE MACHINE";
+      content: "EXTREME DAD ENERGY";
       position: absolute;
       top: 18px;
-      left: -75px;
+      left: -65px;
       transform: rotate(-35deg);
       background: var(--green);
       color: #08110b;
       font-weight: 1000;
-      padding: 10px 85px;
+      padding: 10px 75px;
       font-size: 0.78rem;
       letter-spacing: 1px;
     }
 
     .card::after {
-      content: "100% DAD-POWERED";
+      content: "GROAN LICENSED";
       position: absolute;
       bottom: 22px;
-      right: -65px;
+      right: -55px;
       transform: rotate(-25deg);
       background: var(--pink);
       color: white;
       font-weight: 1000;
-      padding: 10px 75px;
+      padding: 10px 65px;
       font-size: 0.78rem;
       letter-spacing: 1px;
     }
@@ -157,7 +156,7 @@
     }
 
     .joke-box::before {
-      content: "🚨 DAD DAMAGE DETECTED 🚨";
+      content: "🚨 CRINGE INCOMING 🚨";
       position: absolute;
       top: -18px;
       left: 50%;
@@ -198,7 +197,7 @@
         radial-gradient(circle at 30% 20%, #fff, transparent 14%),
         linear-gradient(135deg, var(--yellow), #ff8a00, var(--pink));
       color: #101010;
-      font-size: clamp(1.4rem, 6vw, 3.4rem);
+      font-size: clamp(1.35rem, 6vw, 3.2rem);
       font-weight: 1000;
       font-family: inherit;
       box-shadow:
@@ -287,7 +286,7 @@
       100% { transform: translate(0, 0) rotate(0deg); }
     }
 
-    .burp {
+    .pop {
       position: fixed;
       z-index: 50;
       font-size: 2.5rem;
@@ -339,17 +338,17 @@
       <h1>Dad Joke<br>Goblin</h1>
 
       <p class="subtitle">
-        One button. Infinite nonsense. Questionable taste. Zero apology.
+        One button. Maximum cringe. Dangerous levels of dad energy.
       </p>
 
       <section class="joke-box">
         <p id="joke">
-          Press the big stupid button and receive verbal diarrhoea.
+          Press the big silly button and prepare to groan.
         </p>
       </section>
 
       <div class="button-wrap">
-        <button id="bigButton">SUMMON A RUDE DAD JOKE</button>
+        <button id="bigButton">SUMMON MAXIMUM DAD CRINGE</button>
       </div>
 
       <div class="stats">
@@ -360,7 +359,7 @@
     </section>
 
     <section class="mini-panel">
-      <h2>Recent emotional damage</h2>
+      <h2>Recent groan crimes</h2>
       <ul id="history"></ul>
     </section>
   </main>
@@ -381,76 +380,104 @@
     let history = safeJsonParse(localStorage.getItem("goblin_joke_history"), []);
 
     const chaosEmojis = [
-      "🤡", "💩", "🧀", "🧦", "🦆", "🔥", "🥴", "👹", "🍕", "🪠",
-      "🚽", "🧃", "🦷", "🧻", "🐸", "🥔", "🦀", "🧅", "🎺", "🫠"
+      "🤡", "🧀", "🧦", "🦆", "🔥", "🥴", "👹", "🍕", "🪠",
+      "🧃", "🦷", "🐸", "🥔", "🦀", "🧅", "🎺", "🫠", "👞", "🥸", "🪩"
     ];
 
-    const rudeLocalJokes = [
-      "I told my wallet I needed support. It said, “Mate, I’m emptier than your promises.”",
-      "My toilet and I have a lot in common. We both deal with my crap daily.",
-      "I asked my fridge for advice. It said, “Stop opening me like I have answers, you absolute snack gremlin.”",
-      "I tried to flirt with my Wi-Fi. It said the connection was weak and emotionally unavailable.",
-      "My bank account ghosted me. Honestly, I respect the boundaries.",
-      "I told my alarm clock it was annoying. It said, “I’m not the one wasting his life in bed, champ.”",
-      "My printer has started therapy because I keep asking it to work under pressure.",
-      "I bought a camouflage jacket, but I can’t see myself wearing it. Which is still better than seeing my life choices.",
-      "I asked my mirror for honesty. It said, “Legally, I cannot say that out loud.”",
-      "My socks left me. Apparently even they could smell the relationship was dead.",
-      "I told my sofa I needed space. It said, “You’ve been spreading across me for years, you furniture parasite.”",
-      "My phone battery dies faster than my motivation on a Monday morning.",
-      "I asked my calendar for a break. It scheduled a breakdown and invited my anxiety.",
-      "I tried being mature once. Worst 14 seconds of my life.",
-      "My diet plan and my printer have one thing in common: both jam when things get serious.",
-      "I told my search history I was proud of it. It deleted itself out of shame.",
-      "My common sense packed a bag and left. It said it was tired of working unpaid overtime.",
-      "I asked my microwave if I was hot. It said, “Only in short, disappointing bursts.”",
-      "My group chat has more red flags than a budget circus.",
-      "I went to buy inner peace, but my card was declined for suspicious optimism.",
-      "My gym membership said it misses me. Bit clingy for something I ignore professionally.",
-      "I tried to make a clean joke, but then my personality walked in wearing muddy shoes.",
-      "My motivation is like cheap toilet paper: thin, unreliable, and gone when needed.",
-      "I asked my coffee if it believed in me. It said, “I’m a drink, not a miracle worker.”",
-      "My cooking is so bad the smoke alarm has started seasoning itself.",
-      "I told my laundry basket I’d deal with it tomorrow. It laughed and evolved into furniture.",
-      "My password manager judged me so hard it suggested therapy as a security question.",
-      "I asked my suitcase if I was ready for travel. It said, “You pack like a raccoon having a panic attack.”",
-      "My car insurance costs so much it should legally call me beautiful.",
-      "I bought noise-cancelling headphones so I could finally ignore my own bad decisions in HD."
+    const cringeJokes = [
+      "I told my suitcase there would be no emotional baggage this time. It said, “Then why am I packed?”",
+      "I bought a belt made of watches. Complete waist of time.",
+      "I tried to organise a hide and seek tournament, but good players are hard to find.",
+      "My fridge said I should chill. Honestly, that was cold.",
+      "I asked my calendar why it looked nervous. It said its days were numbered.",
+      "I started a band called 999 Megabytes. We still haven’t got a gig.",
+      "I told my printer it was useless. Now it’s refusing to work out of spite.",
+      "I bought a book about glue. I couldn’t put it down.",
+      "I asked the cemetery if it had Wi-Fi. They said the connection was dead.",
+      "My vacuum cleaner quit. It said I was just pushing it around.",
+      "I made a pencil with two erasers. It was pointless.",
+      "I used to hate facial hair, but then it grew on me.",
+      "I tried to make a joke about paper. It was tearable.",
+      "I told my alarm clock it was annoying. It said, “Don’t blame me for your poor snooze decisions.”",
+      "I opened a bakery for pessimists. Business is crumbling.",
+      "I asked my mirror for a compliment. It said, “Reflect on that.”",
+      "I tried to catch fog yesterday. I mist.",
+      "I don’t trust stairs. They’re always up to something.",
+      "I asked my shoes if they were tired. They said they were sole-destroyed.",
+      "My coffee told me a joke. It was brew-tal.",
+      "I bought a boat because it was on sail.",
+      "The scarecrow won an award because he was outstanding in his field.",
+      "I told a joke about construction. I’m still working on it.",
+      "I asked my phone if it was hungry. It said it had too many cookies.",
+      "I gave my dog a phone. Now he won’t stop collaring me.",
+      "I went to buy camouflage trousers, but I couldn’t find any.",
+      "I asked the clock for advice. It said, “Give it time.”",
+      "I told my sofa a joke. It said it needed a moment to cushion the blow.",
+      "I made a joke about elevators. It works on many levels.",
+      "I asked my keyboard for help. It said I wasn’t its type.",
+      "I told my towel a secret. It said it would absorb the information.",
+      "I bought a ladder to improve myself. It was a step up.",
+      "I asked my bicycle why it was tired. It said it was two-tyred.",
+      "I tried to make a joke about sodium. Na.",
+      "I told my laptop to take a break. It said it had too many tabs open emotionally.",
+      "I asked my cheese if it wanted to go out. It said, “Only if it’s mature.”",
+      "I tried to write a joke about pizza. It was too cheesy.",
+      "I asked my curtains if they were okay. They told me to pull myself together.",
+      "I bought a thesaurus, but when I opened it all the pages were blank. I have no words.",
+      "I asked my plant if it was lonely. It said it was rooting for me.",
+      "I told my headphones a joke. They said it sounded good.",
+      "I started a restaurant for chickens. It was an egg-cellent idea.",
+      "I asked the ocean for a joke. It waved.",
+      "I told my washing machine a secret. It put a spin on it.",
+      "I tried to make a skeleton laugh, but he didn’t have the guts.",
+      "I bought a pair of shoes from a drug dealer. I don’t know what he laced them with, but I’ve been tripping all day.",
+      "I asked my lightbulb for advice. It said I needed a bright idea.",
+      "I told my chair it was supportive. It said, “I’ve got your back.”",
+      "I asked the banana why it was sad. It said life was peeling apart.",
+      "I tried to make a joke about butter, but it spread too far."
     ];
 
     const templates = [
-      () => "I tried talking to " + pick([
-        "my fridge", "my wallet", "my alarm clock", "my mirror", "my sofa",
-        "my phone", "my microwave", "my printer", "my Wi-Fi", "my calendar"
-      ]) + ", but it " + pick([
-        "filed a complaint", "blocked my number", "asked for space",
-        "called me a liability", "sent me an invoice", "left me on read",
-        "reported me to customer service", "changed the locks"
-      ]) + ". " + pick([
-        "Honestly, fair.",
-        "I was offended until I saw the evidence.",
-        "That hurt, but the delivery was excellent.",
-        "The warranty covers everything except my dignity.",
-        "I wanted closure. It gave me a tracking number.",
-        "That is not a red flag. That is a whole fire station."
-      ]),
+      () => "I asked my " + pick([
+        "fridge", "printer", "calendar", "mirror", "sofa", "keyboard", "alarm clock", "microwave"
+      ]) + " for advice. It said, “" + pick([
+        "Give it time.",
+        "Chill out.",
+        "You are not my type.",
+        "Reflect on your choices.",
+        "I support you, but please sit down.",
+        "This is a heated situation.",
+        "Your days are numbered.",
+        "Let’s not print more problems."
+      ]) + "”",
 
       () => "My " + pick([
-        "bank account", "motivation", "sleep schedule", "common sense",
-        "left sock", "diet plan", "life plan", "patience"
-      ]) + " is like " + pick([
-        "a cheap umbrella", "a supermarket self-checkout", "public Wi-Fi",
-        "hotel soap", "a suspicious kebab", "a wet cardboard box"
-      ]) + ": " + pick([
-        "technically present, but nobody trusts it.",
-        "collapses under the slightest pressure.",
-        "mostly disappointing and smells faintly of regret.",
-        "works until you actually need it.",
-        "somehow worse after midnight.",
-        "an insult to engineering and dignity."
+        "coffee", "cheese", "keyboard", "plant", "suitcase", "phone", "washing machine", "shoes"
+      ]) + " told me a joke. It was " + pick([
+        "brew-tal.",
+        "grate.",
+        "not my type.",
+        "rooted in truth.",
+        "packed with emotion.",
+        "a bit app-solutely awful.",
+        "a spin-off.",
+        "sole-destroying."
       ]),
 
-      () => pick(rudeLocalJokes)
+      () => "I tried to make a joke about " + pick([
+        "paper", "construction", "elevators", "pizza", "sodium", "butter", "fog", "stairs"
+      ]) + ", but " + pick([
+        "it was tearable.",
+        "I’m still working on it.",
+        "it worked on many levels.",
+        "it was too cheesy.",
+        "Na.",
+        "it spread too far.",
+        "I mist.",
+        "it was up to something."
+      ]),
+
+      () => pick(cringeJokes)
     ];
 
     function safeJsonParse(value, fallback) {
@@ -478,10 +505,10 @@
       }
     }
 
-    function burpExplosion() {
+    function cringeExplosion() {
       for (let i = 0; i < 10; i++) {
         const span = document.createElement("span");
-        span.className = "burp";
+        span.className = "pop";
         span.textContent = pick(chaosEmojis);
         span.style.left = (20 + Math.random() * 60) + "vw";
         span.style.top = (35 + Math.random() * 30) + "vh";
@@ -501,7 +528,7 @@
       countEl.textContent = count;
       localStorage.setItem("goblin_joke_count", String(count));
 
-      const cringe = Math.floor(69 + Math.random() * 31);
+      const cringe = Math.floor(80 + Math.random() * 21);
       cringeEl.textContent = cringe + "%";
 
       history.unshift(joke);
@@ -514,11 +541,11 @@
       void page.offsetWidth;
       page.classList.add("shake");
 
-      burpExplosion();
+      cringeExplosion();
     }
 
-    function localRudeJoke() {
-      saveJoke(pick(templates)(), "Local goblin brain");
+    function localCringeJoke() {
+      saveJoke(pick(templates)(), "Local cringe engine");
     }
 
     async function getApiJoke() {
@@ -536,7 +563,7 @@
 
           if (!data.joke) throw new Error("No joke");
 
-          saveJoke(data.joke + " Still less embarrassing than your browser history.", "Free dad joke API");
+          saveJoke(data.joke + " Magnificent. Terrible. Exactly as nature intended.", "Free dad joke API");
           return;
         }
 
@@ -548,29 +575,29 @@
 
         if (!data.setup || !data.punchline) throw new Error("No joke");
 
-        saveJoke(data.setup + " " + data.punchline + " Filthy behaviour from a grown website.", "Official Joke API");
+        saveJoke(data.setup + " " + data.punchline + " That one came wearing socks with sandals.", "Official Joke API");
       } catch {
-        localRudeJoke();
+        localCringeJoke();
       }
     }
 
     function summonJoke() {
       bigButton.disabled = true;
       bigButton.textContent = pick([
-        "COOKING NONSENSE...",
-        "LOADING CRINGE...",
-        "SUMMONING GOBLIN...",
-        "REHEATING BAD IDEAS...",
-        "OPENING THE DAD PORTAL..."
+        "PREHEATING THE CRINGE...",
+        "POLISHING THE DAD SHOES...",
+        "LOADING SOCKS WITH SANDALS...",
+        "ADDING EXTRA CHEESE...",
+        "CALIBRATING THE GROAN METER..."
       ]);
 
       setTimeout(() => {
-        const useApi = Math.random() < 0.28;
+        const useApi = Math.random() < 0.25;
 
         if (useApi) {
           getApiJoke().finally(() => resetButton());
         } else {
-          localRudeJoke();
+          localCringeJoke();
           resetButton();
         }
       }, 420);
@@ -579,11 +606,11 @@
     function resetButton() {
       bigButton.disabled = false;
       bigButton.textContent = pick([
-        "SUMMON ANOTHER RUDE DAD JOKE",
-        "HIT ME AGAIN, GOBLIN",
-        "MORE VERBAL DIARRHOEA",
-        "DEPLOY THE CRINGE CANNON",
-        "PRESS FOR NONSENSE"
+        "SUMMON MAXIMUM DAD CRINGE",
+        "PRESS FOR A TERRIBLE PUN",
+        "RELEASE THE GROAN",
+        "DEPLOY THE CHEESE",
+        "ONE MORE, UNFORTUNATELY"
       ]);
     }
 
@@ -592,7 +619,7 @@
 
       if (history.length === 0) {
         const li = document.createElement("li");
-        li.textContent = "No damage yet. The public remains safe.";
+        li.textContent = "No groans yet. The room is still safe.";
         historyEl.appendChild(li);
         return;
       }
